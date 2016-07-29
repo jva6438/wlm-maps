@@ -40,6 +40,10 @@ $mobile='0';
 if (isset($_GET['mobile'])) {
     $mobile = $_GET['mobile'];
 }
+$withImages='0';
+if (isset($_GET['withImages'])) {
+    $withImages = $_GET['withImages'];
+}
 // open the database
 $dbmycnf = parse_ini_file("../replica.my.cnf");
 $dbuser = $dbmycnf['user'];
@@ -60,11 +64,19 @@ try {
 }
 
 try {
-    $limit = 1000;
+    $limit = 125;
     if ($mobile == '1'){
-        $limit = 50;
+        $limit = 15;
     }
-    $sql="SELECT country, lang, id, name, lat, lon, image, commonscat, monument_article, monument_random FROM monuments_all WHERE lon>=:left AND lon<=:right AND lat>=:bottom AND lat<=:top ORDER BY monument_random LIMIT ".$limit;
+    $imageCondition = "image = ''";
+    if ($withImages == '1'){
+        $imageCondition = "image != ''";
+    }
+    $sql="SELECT country, lang, id, name, lat, lon, municipality, address, image, commonscat, monument_article, source " .
+         "FROM monuments_all " .
+         "WHERE lon>=:left AND lon<=:right AND lat>=:bottom AND lat<=:top AND " . $imageCondition . " " .
+         "ORDER BY MD5(id)" .
+         "LIMIT " . $limit;
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':left', $left, PDO::PARAM_STR);
     $stmt->bindParam(':right', $right, PDO::PARAM_STR);
@@ -83,6 +95,7 @@ try {
 $ajaxres=array(); // place to store the geojson result
 $features=array(); // array to build up the feature collection
 $ajaxres['type']='FeatureCollection';
+$ajaxres['withImages']=$withImages;
 
 // go through the list adding each one to the array to be returned    
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -91,17 +104,22 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     
     $prop=array();
     $prop['country']=$row['country'];
+    $prop['municipality']=$row['municipality'];
+    $prop['address']=$row['address'];
     $prop['lang']=$row['lang'];
     $prop['id']=$row['id'];
     $prop['name']=explode('|', $row['name']);
     $prop['name']=str_replace(array('[', ']'), '', $prop['name'][0]);
     $prop['monument_article']=str_replace(' ' , '_', $row['monument_article']);
     $prop['image']=str_replace(' ', '_', $row['image']);
+    $prop['image']=preg_replace('/_+/', '_', $prop['image']); //remove duplicated spaces
+    $prop['image']=preg_replace('/([Ff]ile|[Ii]mage):/', '', $prop['image']);
     if (empty($prop['image'])) {
         $prop['image'] = 'Monument_unknown.png';
     }
     $prop['md5']=substr(md5($prop['image']),0,2);
     $prop['commonscat']=str_replace(' ', '_', $row['commonscat']);
+    $prop['source']=str_replace(' ', '_', preg_split('/&[a-z]+=/', $row['source'])[0]);
 
     $f=array();
     $geom=array();

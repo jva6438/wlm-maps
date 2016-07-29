@@ -6,6 +6,7 @@ body{
     font-size: 82%;
     margin: 2px;
     height:100%;
+    overflow: hidden;
 }
 #mapdiv {
     width:100%;
@@ -22,8 +23,8 @@ body{
     border-radius: 5px;
 }
 #wait {
-    bottom: 50px;
-    right: 40px;
+    bottom: 145px;
+    right: 175px;
     display: none;
     background-color:rgba(255,100,100,0.8);
 }
@@ -31,12 +32,58 @@ body{
     bottom: 50px;
     left: 40px;
     display: block;
+    color: white;
     background-color:rgba(100,100,255,0.8);
+}
+#csv-button {
+    bottom: 50px;
+    left: 200px;
+    display: block;
+    color: white;
+    background-color: pink;
+}
+#gallery-div {
+    position: absolute;
+    bottom: 25px;
+    right: 175px;
+    border: 2px solid green;
+    height: 100px;
+    overflow: hidden;
+    background-color: green;
+}
+#gallery-table {
+    background-color: green;
+}
+#notice {
+    position: absolute;
+    bottom: 200px;
+    right: 15px;
+    display: block;
+    background-color: lightgreen;
+    width: 150px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 6px 8px;
+}
+#share {
+    position: absolute;
+    bottom: 185px;
+    right: 12px;
+    display: block;
+    background-color: lightgreen;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    padding: 6px 8px;
 }
 .title {
-    top:10px;
+    top:15px;
     left:50px;
     font: 20px Arial, Helvetica, sans-serif;
-    background-color:rgba(100,100,255,0.8);
+    font-weight: bold;
+    color: white;
+    background-color:#A50308;
+    text-align: center;
 }
-
+a {
+    text-decoration: none;
+}

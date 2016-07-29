@@ -1,27 +1,47 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Wiki Loves Monuments 2015</title>
+    <title>Wiki Loves Monuments 2016</title>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="leaflet/leaflet.css" />
     <link rel="stylesheet" href="leaflet/Control.OSMGeocoder.css" />
     <link rel="stylesheet" href="leaflet/L.Control.Sidebar.css" />
+    <link rel="stylesheet" href="leaflet/Control.MiniMap.min.css" />
     <link rel="stylesheet" href="wlm-maps.css" />
     
-    <script src="jquery/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="//tools-static.wmflabs.org/cdnjs/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
     <script src="leaflet/leaflet.js" type="text/javascript"></script>
     <script src="leaflet/leaflet-hash.js" type="text/javascript"></script>
     <script src="leaflet/Control.OSMGeocoder.js" type="text/javascript"></script>
     <script src="leaflet/L.Control.Sidebar.js" type="text/javascript"></script>
+    <script src="leaflet/Control.MiniMap.min.js" type="text/javascript"></script>
+    <script src="i18n.js" type="text/javascript"></script>
     <script src="wlm-maps.js" type="text/javascript"></script>
 </head>
 <body>
     <div id="mapdiv"></div>
     <div id="sidebar"><h1>leaflet-sidebar</h1></div>
-    <div class="overlay title">Wiki Loves Monuments</div>
-    <div id="wait" class="overlay">Loading... Please wait</div>
-    <div id="menu-button" class="overlay"><a href="#" onclick="sidebar.show();return false;">Show menu</a></div>
+    <div class="overlay title">Wiki Loves Monuments<!-- <a href="https://twitter.com/wikimonuments" target="_blank" title="Follow us on Twitter!"><img src="icons/twitter.ico" /></a> <a href="https://www.facebook.com/WikiLovesMonuments" target="_blank" title="Follow us on Facebook!"><img src="icons/facebook.png" /></a>--><br/><small><small><script>document.write(translatemsg('september-year'));</script></small></small></div>
+    <div id="wait" class="overlay"><script>document.write(translatemsg('loading'));</script></div>
+    <div id="menu-button" class="overlay">
+        <a href="#" onclick="sidebar.show();return false;"><script>document.write(translatemsg('show-menu'));</script></a>
+    </div>
+    <div id="csv-button" class="overlay">
+        <a href="#" download="wlm-monuments.csv" onclick="this.href=encodedCSVUri;">CSV <img src="icons/download.png" /></a>
+    </div>
+    <div id="gallery-div">
+       &nbsp;
+    </div>
+    <!--<div id="notice">
+        Some lists of monuments are not parsed correctly. We are <a href="https://phabricator.wikimedia.org/T110420" target="_blank">working to fix it</a>. Meanwhile, some areas can be empty.
+    </div>-->
+    <div id="share">
+        <b><script>document.write(translatemsg('share-map'));</script></b> 
+        <script>document.write('<a href="https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.href)+'" target="_blank" title="Share this map on Facebook!"><img src="icons/facebook.png" width="18px" /></a>');</script>
+        <script>document.write('<a href="https://twitter.com/home?status=Write+here+a+message+'+encodeURIComponent(window.location.href)+'+'+encodeURIComponent('#WikiLovesMonuments')+'" target="_blank" title="Share this map on Twitter!"><img src="icons/twitter.ico" width="18px" /></a>');</script>
+
+    </div>
 </body>
 </html>
